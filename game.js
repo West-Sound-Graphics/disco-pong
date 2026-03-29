@@ -185,6 +185,9 @@ const ball = new THREE.Mesh(ballGeometry, ballMaterial);
 ball.position.set(0, 0, 0);
 scene.add(ball);
 
+// Game state
+let gameStarted = false;
+
 // Game variables
 let ballVelocity = new THREE.Vector3(0.1, 0.05, 0);
 let playerScore = 0;
@@ -244,6 +247,11 @@ function animate() {
     ball.position.add(ballVelocity);
 
     // Ball collision with top and bottom walls
+    if (!gameStarted) {
+        renderer.render(scene, camera);
+        return;
+    }
+
     if (ball.position.y > 9.5 || ball.position.y < -9.5) {
         ballVelocity.y = -ballVelocity.y;
         playWallHitSound();
@@ -314,8 +322,22 @@ window.addEventListener('resize', () => {
 initAudio();
 animate();
 
-// Music toggle functionality
+// Title screen controls
+const titleScreen = document.getElementById('title-screen');
+const startButton = document.getElementById('start-button');
 const musicToggle = document.getElementById('music-toggle');
+
+startButton.addEventListener('click', () => {
+    titleScreen.style.display = 'none';
+    gameStarted = true;
+    if (!isMusicPlaying) {
+        discoMusic.play();
+        musicToggle.textContent = '🎵 Pause Disco Music';
+        musicToggle.classList.add('playing');
+    }
+});
+
+// Music toggle functionality
 musicToggle.addEventListener('click', () => {
     if (isMusicPlaying) {
         discoMusic.pause();
@@ -325,5 +347,12 @@ musicToggle.addEventListener('click', () => {
         discoMusic.play();
         musicToggle.textContent = '🎵 Pause Disco Music';
         musicToggle.classList.add('playing');
+    }
+});
+
+// Optional keyboard control to start game
+window.addEventListener('keydown', (event) => {
+    if (!gameStarted && event.code === 'Enter') {
+        startButton.click();
     }
 });

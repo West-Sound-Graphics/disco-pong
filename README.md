@@ -11,6 +11,7 @@ A vibrant, disco-themed Pong game built with Three.js. Play against the computer
 - **Dynamic Colors**: All game elements cycle through rainbow colors
 - **Disco Music**: Built-in synthesized disco background music with play/pause controls
 - **Sound Effects**: Distinct sounds for wall bounces and paddle hits
+- **Custom Settings**: Title screen controls for ball speed (Slow/Mid/Fast) and AI skill (Easy/Normal/Hard)
 - **3D Graphics**: Powered by Three.js for smooth gameplay
 
 ## How to Play

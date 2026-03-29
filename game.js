@@ -188,12 +188,15 @@ scene.add(ball);
 // Game state
 let gameStarted = false;
 
+// Configurable speeds
+let currentBallSpeed = 0.15;
+let aiSpeed = 0.1;
+
 // Game variables
-let ballVelocity = new THREE.Vector3(0.1, 0.05, 0);
+let ballVelocity = new THREE.Vector3(currentBallSpeed, 0.05, 0);
 let playerScore = 0;
 let computerScore = 0;
 const paddleSpeed = 0.2;
-const ballSpeed = 0.15;
 const maxScore = 10;
 let time = 0; // For disco color animation
 
@@ -217,7 +220,7 @@ function updateScore() {
 // Reset ball
 function resetBall() {
     ball.position.set(0, 0, 0);
-    ballVelocity.set(Math.random() > 0.5 ? ballSpeed : -ballSpeed, (Math.random() - 0.5) * 0.1, 0);
+    ballVelocity.set(Math.random() > 0.5 ? currentBallSpeed : -currentBallSpeed, (Math.random() - 0.5) * 0.1, 0);
 }
 
 // Game loop
@@ -234,7 +237,7 @@ function animate() {
 
     // AI for computer paddle
     computerTargetY = ball.position.y;
-    const computerSpeed = 0.1;
+    const computerSpeed = aiSpeed;
     if (computerPaddle.position.y < computerTargetY - 0.5) {
         computerPaddle.position.y += computerSpeed;
     } else if (computerPaddle.position.y > computerTargetY + 0.5) {
@@ -326,8 +329,17 @@ animate();
 const titleScreen = document.getElementById('title-screen');
 const startButton = document.getElementById('start-button');
 const musicToggle = document.getElementById('music-toggle');
+const ballSpeedSelect = document.getElementById('ball-speed-select');
+const aiSkillSelect = document.getElementById('ai-skill-select');
+
+function applySettings() {
+    currentBallSpeed = parseFloat(ballSpeedSelect.value) || 0.15;
+    aiSpeed = parseFloat(aiSkillSelect.value) || 0.1;
+}
 
 startButton.addEventListener('click', () => {
+    applySettings();
+    resetBall();
     titleScreen.style.display = 'none';
     gameStarted = true;
     if (!isMusicPlaying) {
@@ -336,6 +348,9 @@ startButton.addEventListener('click', () => {
         musicToggle.classList.add('playing');
     }
 });
+
+ballSpeedSelect.addEventListener('change', applySettings);
+aiSkillSelect.addEventListener('change', applySettings);
 
 // Music toggle functionality
 musicToggle.addEventListener('click', () => {

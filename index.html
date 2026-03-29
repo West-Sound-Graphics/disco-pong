@@ -163,6 +163,23 @@
             color: #ffffff;
             animation: pulseTitle 2s ease-in-out infinite;
         }
+        #title-screen .settings-row {
+            margin: 10px auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 20px;
+        }
+        #title-screen select {
+            border-radius: 8px;
+            padding: 8px 10px;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+        }
         #title-screen h1 {
             font-size: 96px;
             margin: 0 0 20px;
@@ -209,7 +226,26 @@
     <div id="title-screen">
         <div class="title-content">
             <h1>DISCO PONG</h1>
-            <p>Press start and rock the court</p>
+            <p>Pick your style and challenge the AI</p>
+
+            <div class="settings-row">
+                <label for="ball-speed-select">Ball speed:</label>
+                <select id="ball-speed-select">
+                    <option value="0.08">Slow</option>
+                    <option value="0.15" selected>Mid</option>
+                    <option value="0.24">Fast</option>
+                </select>
+            </div>
+
+            <div class="settings-row">
+                <label for="ai-skill-select">Opponent skill:</label>
+                <select id="ai-skill-select">
+                    <option value="0.06">Easy</option>
+                    <option value="0.1" selected>Normal</option>
+                    <option value="0.15">Hard</option>
+                </select>
+            </div>
+
             <button id="start-button">START THE PARTY</button>
         </div>
     </div>
